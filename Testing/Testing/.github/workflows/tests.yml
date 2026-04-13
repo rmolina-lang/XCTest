@@ -1,0 +1,16 @@
+name: Run Tests
+on: [push]
+
+jobs:
+    test:
+        runs-on: macos-latest
+        
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+            
+            - name: Run Tests
+              run: xcodebuild test -scheme Testing -destination 'platform=iOS Siumulator, name=iPhone 16, OS=latest' - resultBundlePath TestResults
+            
+            
+            
