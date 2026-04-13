@@ -19,7 +19,7 @@ jobs:
       - name: Run tests
         run: |
           xcodebuild test \
-            -scheme YourAppName \
+            -scheme Testing \
             -destination 'platform=iOS Simulator,name=iPhone 16,OS=latest' \
             -resultBundlePath TestResults \
             | xcpretty
