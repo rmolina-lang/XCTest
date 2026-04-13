@@ -2,7 +2,7 @@
 //  YourAppUITests.swift
 //  YourAppUITests
 //
-//  Created by David Molina on 13/04/2026.
+//  Created by Raymond Molina on 13/04/2026.
 //
 
 import XCTest
@@ -23,21 +23,16 @@ final class YourAppUITests: XCTestCase {
     }
 
     @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
+    func testAddTaskUI(){
         let app = XCUIApplication()
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // XCUIAutomation Documentation
-        // https://developer.apple.com/documentation/xcuiautomation
-    }
-
-    @MainActor
-    func testLaunchPerformance() throws {
-        // This measures how long it takes to launch your application.
-        measure(metrics: [XCTApplicationLaunchMetric()]) {
-            XCUIApplication().launch()
-        }
+        
+        let textfield = app.textFields["AddTaskField"]
+        textfield.tap()
+        textfield.typeText("New Task")
+        
+        app.buttons["AddButton"].tap()
+        
+        XCTAssertTrue(app.staticTexts["New Task"].exists)
     }
 }

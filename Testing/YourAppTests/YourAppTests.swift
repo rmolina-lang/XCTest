@@ -2,36 +2,55 @@
 //  YourAppTests.swift
 //  YourAppTests
 //
-//  Created by David Molina on 13/04/2026.
+//  Created by Raymond Molina on 13/04/2026.
 //
 
 import XCTest
+@testable import Testing
 
 final class YourAppTests: XCTestCase {
 
+    var sut: TaskViewModel!
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        try super.setUpWithError()
+        sut = TaskViewModel()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        sut = nil
+        try super.tearDownWithError()
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-        // XCTest Documentation
-        // https://developer.apple.com/documentation/xctest
+    
+    func testAddTask(){
+        var tasks = [Task]()
+        let newTask = Task(title: "Test Task", isCompleted: false)
+        
+        tasks.append(newTask)
+        
+        XCTAssertEqual(tasks.count, 1)
+        XCTAssertEqual(tasks.first?.title, "Test Task")
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testToggleTaskCompletion(){
+        var task = Task(title: "Test", isCompleted: false)
+        
+        task.isCompleted.toggle()
+        
+        XCTAssertTrue(task.isCompleted)
+    }
+    
+    func testDeleteTask() {
+        let viewModel = TaskViewModel()
+        viewModel.tasks = [
+            Task(title: "Test Task 1", isCompleted: false),
+            Task(title: "Test Task 2", isCompleted: true)
+        ]
+        
+        viewModel.deleteTask(at: IndexSet(integer: 0))
+        
+        XCTAssertEqual(viewModel.tasks.count, 1)
+        XCTAssertEqual(viewModel.tasks.first?.title, "Test Task 2")
     }
 
 }

@@ -35,13 +35,13 @@ struct ContentView: View {
                         
                         Spacer()
                         
-                        Button("Toggle"){
+                        Button("Strike"){
                             viewModel.toggleTask(id: task.id)
                         }
                         .accessibilityIdentifier("ToggleButton")
                     }
                 }
-                .onDelete(perform:viewModel.deleteTask)
+                .onDelete(perform: viewModel.deleteTask)
             }
         }
         
