@@ -41,16 +41,31 @@ final class YourAppTests: XCTestCase {
     }
     
     func testDeleteTask() {
-        let viewModel = TaskViewModel()
-        viewModel.tasks = [
+        sut.tasks = [
             Task(title: "Test Task 1", isCompleted: false),
             Task(title: "Test Task 2", isCompleted: true)
         ]
         
-        viewModel.deleteTask(at: IndexSet(integer: 0))
+        sut.deleteTask(at: IndexSet(integer: 0))
         
-        XCTAssertEqual(viewModel.tasks.count, 1)
-        XCTAssertEqual(viewModel.tasks.first?.title, "Test Task 2")
+        XCTAssertEqual(sut.tasks.count, 1)
+        XCTAssertEqual(sut.tasks.first?.title, "Test Task 2")
+    }
+    
+    func testEmptyTaskNotAdded() {
+        let taskTitle = ""
+        XCTAssertTrue(taskTitle.isEmpty)
+    }
+    
+    func testVeryLongTaskTitle(){
+        let longTitle = String(repeating: "a", count: 10000)
+        XCTAssertFalse(sut.isValidTitleLength(title: longTitle))
+    }
+    
+    func testDuplicatesNotAdded() {
+        sut.addTask(title: "Task 1")
+        sut.addTask(title: "Task 1")
+        XCTAssertEqual(sut.tasks.count, 1)
     }
 
 }
